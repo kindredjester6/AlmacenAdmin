@@ -34,19 +34,72 @@ const getProducts = async (req,res) => {
   res.send(listJson);
   };
 
-const getProduct = async (req,res) => {
-  const {Id} = req.params
+const getProductName = async(req, res) => {
+  const {Name} = req.params
+  console.log(Name)
+
+  const pool = await conex();
+  const result = await pool
+    .request()
+    .input("Name", sql.VarChar(128), Name)
+    .query('spFiltrarArticulos @Name, 0, 0'); //Cambiar por el Sp
+
+  const listJson = result.recordset;
+  console.log(listJson);
+
+  return res.send(listJson);
+}
+
+const getProductCant = async(req, res) => {
+  const {Cant} = req.params
+  console.log('ahhhhh')
   var re = /^[0-9]+$/;
-  if(!re.test(Id)){
-    return res.send(`
-      <h1> Favor digitar el codigo del articulo
+  if(!re.test(Cant)){
+    return res.status(400).json({
+      error:'error'
+    })
+  }
+  const pool = await conex();
+  const result = await pool
+    .request()
+    .input("Cant", sql.Int, Cant)
+    .query("spFiltrarArticulos '', @Cant, 0"); //Cambiar por el Sp
+
+  const listJson = result.recordset;
+  console.log(listJson);
+
+  return res.send(listJson);
+}
+
+const getProductClss = async(req, res) => {
+  const {Clss} = req.params
+  
+  const pool = await conex();
+  const result = await pool
+    .request()
+    .input("Clss", sql.Int, Clss)
+    .query("spFiltrarArticulos '',0 ,@Clss"); //Cambiar por el Sp
+
+  const listJson = result.recordset;
+  console.log(listJson);
+
+  return res.send(listJson);
+}
+
+//Por codigo, es para la parte de eliminar
+const getProduct = async (req,res) => {
+  const {Codigo} = req.params
+  var re = /^[0-9]+$/;
+  if(!re.test(Codigo)){
+    return res.status(400).send(`
+      <h1> Favor digitar el codigo del articulos
       </h1>`)
   }
   const pool = await conex();
   const result = await pool
     .request()
-    .input("Id", sql.Int, Id)
-    .query('Select * from Articulo A where @Id = A.Id'); //Cambiar por el Sp
+    .input("Codigo", sql.Int, Codigo)
+    .query('Select * from Articulo A where @Codigo = A.Codigo'); //Cambiar por el Sp
 
   const listJson = result.recordset;
   console.log(listJson);
@@ -86,4 +139,4 @@ const postProducts = async (req, res) => {
   res.status(200).json(result.recordset[0])
   };
 
-module.exports = {getProducts, postProducts, getSession, getProduct, notFound};
+module.exports = {getProducts,getProductName,getProductCant, getProductClss, postProducts, getSession, getProduct, notFound};

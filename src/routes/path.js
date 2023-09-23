@@ -7,9 +7,11 @@ const controller = require('../controllers/controller')
 
 //Envia una lista con elementos JSON
 router.get("/Almacen/Session", controller.getSession);
+router.get("/Almacen/Listar/Nombre/:Name", controller.getProductName);
+router.get("/Almacen/Listar/Cantidad/:Cant", controller.getProductCant);
+router.get("/Almacen/Listar/Clases/:Clss", controller.getProductClss);
+router.get("/Almacen/Listar/Producto/:Codigo", controller.getProduct); //Recordar cambiar esto por el codigo del articulo
 router.get("/Almacen/Listar", controller.getProducts);
-
-router.get("/Almacen/Listar/:Id", controller.getProduct); //Recordar cambiar esto por el codigo del articulo
 // Create an article.
 router.post("/Almacen/Crear", controller.postProducts);
 

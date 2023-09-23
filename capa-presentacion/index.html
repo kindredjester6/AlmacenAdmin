@@ -1,0 +1,121 @@
+<!--La idea es obtener los datos del servidor local( port:4000) y
+ pasarlos al puerto del html(3000)-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Almacén</title>
+    <link rel="stylesheet" href="style.css"></link>
+    <script type = 'module'>
+        function getApi(recurso){
+            fetch(`http://localhost:3000/Almacen/${recurso}`)
+                .then(res => res.json()) //Analiza los datos de tipo JSON obtenidos del servidor
+                .then(ListaJson => { //Hacer uso de los datos
+                    //dar inicio a la estructura HTML
+                    var html = `<table class ="tabla">
+                        <tr  class = "topRow">
+                                <th>Codigo</th>
+                                <th>Nombre</th>
+                                <th>Clase</th>
+                                <th>Precio</th>
+                        </tr>
+                        `
+                    //Hace un map para concatenar de la forma idonea
+                    const rowArticles = ListaJson.map(article => {
+                        return `
+                            <tr class="rows">
+                                <td>${article.Codigo}</td>
+                                <td>${article.Nombre}</td>
+                                <td>${article.Clase}</td>
+                                <td>${article.Precio}</td>
+                            </tr>
+                        `
+                    }).join(' ')
+
+                    console.log(rowArticles)
+                    html = html.concat(' ',rowArticles)
+
+                    html = html.concat(' ','</table>') 
+                    document.querySelector("main").innerHTML = html //Usa la etiqueta 'main' para incrustar el HTML creado
+                                                                    //anteriormente
+                })
+        }
+        
+        var btnFilName = document.getElementById("btnNombre");
+        var btnFilNum = document.getElementById("btnNumber");
+        var btnFilClss = document.getElementById("btnClass");
+
+        btnFilName.addEventListener("click", function() {
+            let IValue = document.getElementById("name").value
+            console.log(typeof(IValue))
+            getApi(`Listar/Nombre/${IValue}`)
+        })
+
+        btnFilNum.addEventListener("click", function() {
+            let IValue = document.getElementById("number")
+            console.log(typeof(IValue))
+            getApi(`Listar/Cantidad/${IValue.value}`)
+        })
+
+        btnFilClss.addEventListener("click", function() {
+            let IValue = document.getElementById("select-box").value
+            console.log(typeof(IValue))
+            getApi(`Listar/Clases/${IValue}`)
+        })
+
+        getApi("Listar")
+    </script>
+</head>
+<body>
+
+    <div class="cataPos">
+        <div class="cataBorder">
+                <header>Articulos</header>
+                    <label for="name">Nombre
+                        <input class="arts" type="text" id="name" minlength="0" maxlength="8" size="10" autocomplete="off"/>
+
+                        <button id="btnNombre" class="btnFiltrar">Filtrar por nombre</button>
+                    </label>
+
+                    <label for="number">Cantidad
+                        <input class="arts" type="number" id="number" minlength="0" maxlength="8" size="10"/>
+
+                        <button id="btnNumber" class="btnFiltrar">Filtrar por cantidad</button>
+                    </label>
+
+                    <label>Clases
+                        <select id="select-box" class="arts">
+                            <option value=1>Plomería</option>
+                            <option value=2>Eléctricos</option>
+                            <option value=3>Ebanistería</option>
+                        </select>
+
+                        <button id="btnClass" class="btnFiltrar">Filtrar por clase</button>
+                    </label>
+                    
+                <div>
+                    <main id="main"class="tablePos"></main>
+                </div>
+        </div>
+
+        <div id="btnRowBottom">
+            <button id="InsertBtn" class="btnBottom"
+                onclick="location.href='insertar.html'">
+                Insertar
+            </button>
+            <button id="DeleteBtn" class="btnBottom"
+                onclick="location.href='insertar.html'">
+                Borrar
+            </button>
+            <button id="ExitBtn" class="btnBottom"
+                onclick="location.href='insertar.html'">
+                Salir
+            </button>
+        </div>
+    </div>
+
+
+</body>
+</html>
+
