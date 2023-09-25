@@ -1,0 +1,74 @@
+div.posForm{
+    height: 28rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+header{
+    margin-bottom: 2rem;
+}
+
+span{
+    width: 20rem;
+    border-top: 0.1rem solid black ;
+
+}
+
+div.buttonPos{
+    display: flex;
+    margin: 2rem;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+}
+
+label{
+    margin-bottom: 0.5rem;
+}
+input{
+    width: 6rem;
+    border-style: solid;
+    border-width: 0.1rem;
+    border-radius: 0.3rem;
+    padding: .2rem;
+}
+
+button{
+    margin-left: 1rem ;
+    margin-right: 1rem;
+    width: 6rem;
+    border-style: solid;
+    border-width: 0.1rem;
+    border-radius: 0.3rem;
+    border-color: aqua;
+    padding: .2rem;
+    transition: 0.5s;
+    background-color: rgb(64, 230, 230);
+}
+
+button:hover{
+    background-color: rgb(163, 229, 229);
+}
+
+table{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+tbody{
+    display: flex;
+    width: 25rem;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: space-around;
+    align-items: center;
+}
+tr{
+    display: flex;
+    width: 25rem;
+    flex-direction: row;
+    justify-content: space-between;
+}

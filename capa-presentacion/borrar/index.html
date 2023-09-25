@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eliminar articulo</title>
+    <link rel="stylesheet" href="style.css"></link>
+    <script type="text/javascript" src="./main.js">
+    </script>
+    <script type="module">
+        var span;
+        var table;
+        var newButton;
+        var button = document.getElementById("btnDelete");
+        var IBtn = document.getElementById("Codigo")
+        button.addEventListener("click", async function() { //Si el usuario toca el boton inicia el proceso
+            fetch(`http://localhost:3000/Almacen/Listar/Producto/${IBtn.value}`)
+            .then(res => res.json()) //Analiza los datos de tipo JSON obtenidos del servidor
+            .then(ListaJson => { //Hacer uso de los datos
+            //dar inicio a la estructura HTML
+            let span;
+            var html = `<table class ="tabla">
+                <tr  class = "topRow">
+                        <th>id</th>
+                        <th>Codigo</th>
+                        <th>Nombre</th>
+                        <th>Clase</th>
+                        <th>Precio</th>
+                </tr>
+                `
+            //Hace un map para concatenar de la forma idonea
+            const rowArticles = ListaJson.map(article => {
+                return `
+                    <tr class="rows">
+                        <td>${article.id}</td>
+                        <td>${article.Codigo}</td>
+                        <td>${article.Nombre}</td>
+                        <td>${article.Clase}</td>
+                        <td>${article.Precio}</td>
+                    </tr>
+                `
+            }).join(' ')
+            html = html.concat(' ',rowArticles)
+
+            html = html.concat(' ','</table>')
+            document.querySelector("main").innerHTML = html
+            span = document.getElementById("spanBottom")
+            span.style.width = "25rem"
+            span.style.margin = "0.5rem"
+
+            newButton = '<button id="confirmBtn">Confirm</button>'
+            document.querySelector("#spanButtom").innerHTML = newButton
+        })
+        .catch((ERROR) => console.error("Error:", ERROR))
+        //.then(res => res.json())
+        .then((response) => console.log(response))
+    })
+    </script>
+</head>
+<body>
+
+    <div class="posForm">
+        <span></span>
+        <header>Eliminar articulo</header>
+        <label> Codigo del articulo
+            <label id="errorLabel">
+                <input type="text" id="Codigo"/>
+            </label>
+        </label>
+        <span id="spanBottom"></span>
+        <main></main> <!-- importante -->
+        <div class="buttonPos">
+            <button onclick="location.href='../listar/index.html'">Regresar</button>
+            <button id="btnDelete">Borrar</button>
+            <div id="spanButtom"></div>
+        </div>
+    </div>
+</body>
+</html>

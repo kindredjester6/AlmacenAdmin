@@ -16,7 +16,7 @@ div.cataBorder{
     width: 25rem;
     border-top: 0.1rem solid black ;
     border-bottom: 0.1rem solid gray ;
-    height: fit-content;
+    height: max-content;
 }
 label {
     font:

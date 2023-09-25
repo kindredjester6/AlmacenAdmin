@@ -14,6 +14,8 @@ router.get("/Almacen/Listar/Producto/:Codigo", controller.getProduct); //Recorda
 router.get("/Almacen/Listar", controller.getProducts);
 // Create an article.
 router.post("/Almacen/Crear", controller.postProducts);
+// Delete an article.
+router.patch("/Almacen/Borrar/:Codigo", controller.deleteProduct);
 
 router.use(controller.notFound);
 

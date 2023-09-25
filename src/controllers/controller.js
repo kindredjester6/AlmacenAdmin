@@ -42,7 +42,7 @@ const getProductName = async(req, res) => {
   const result = await pool
     .request()
     .input("Name", sql.VarChar(128), Name)
-    .query('spFiltrarArticulos @Name, 0, 0'); //Cambiar por el Sp
+    .query('spFiltrarArticulos @Name, -1, 0'); //Cambiar por el Sp
 
   const listJson = result.recordset;
   console.log(listJson);
@@ -53,7 +53,7 @@ const getProductName = async(req, res) => {
 const getProductCant = async(req, res) => {
   const {Cant} = req.params
   console.log('ahhhhh')
-  var re = /^[0-9]+$/;
+  var re = /^[-1-9]+$/;
   if(!re.test(Cant)){
     return res.status(400).json({
       error:'error'
@@ -78,7 +78,7 @@ const getProductClss = async(req, res) => {
   const result = await pool
     .request()
     .input("Clss", sql.Int, Clss)
-    .query("spFiltrarArticulos '',0 ,@Clss"); //Cambiar por el Sp
+    .query("spFiltrarArticulos '',-1,@Clss"); //Cambiar por el Sp
 
   const listJson = result.recordset;
   console.log(listJson);
@@ -99,14 +99,15 @@ const getProduct = async (req,res) => {
   const result = await pool
     .request()
     .input("Codigo", sql.Int, Codigo)
-    .query('Select * from Articulo A where @Codigo = A.Codigo'); //Cambiar por el Sp
+    .query('spFiltrarXCodigo @Codigo'); //Cambiar por el Sp
 
   const listJson = result.recordset;
-  console.log(listJson);
+  //console.log(listJson);
 
   if (listJson[0] === undefined){
-    return res.send(`<h1> El articulo con el codigo: ${Id}
-      No existe </h1>`)
+    console.log('a')
+    return res.status(400).send({error:`<h1> El articulo con el codigo: ${Codigo}
+      No existe.</h1>`})
   }
   return res.send(listJson);
 };
@@ -120,9 +121,13 @@ const getProduct = async (req,res) => {
  * el 400 indica una mala solicitud de parte del cliente
  */
 const postProducts = async (req, res) => {
-  const { Nombre, Precio } = req.body
+  const { Nombre, Precio, IdClaseArticulo, Codigo } = req.body
 
-  if (Nombre == "" || Precio <= 0 || Precio == null){
+  console.log(Nombre)
+  console.log(Precio)
+  console.log(IdClaseArticulo)
+  console.log(Codigo)
+  if (Nombre == "" || Precio <= 0 || Precio == null || Codigo == ""){
     return res.status(400).json({
         Result: 50002
         , msg:'Datos incompletos'
@@ -132,11 +137,26 @@ const postProducts = async (req, res) => {
 
   const result = await pool
     .request()
-    .input("nombre", sql.VarChar, Nombre)
+    .input("nombre", sql.VarChar(128), Nombre)
     .input("precio", sql.Money, Precio)
-    .query('spInsertarArticulo @nombre, @precio')
+    .input("idClaseA", sql.Int, IdClaseArticulo)
+    .input("codigo", sql.VarChar(32), Codigo)
+    .query('spInsertarArticulo @nombre, @precio, @codigo, @idClaseA')
   console.log(result.recordset[0])
   res.status(200).json(result.recordset[0])
   };
 
-module.exports = {getProducts,getProductName,getProductCant, getProductClss, postProducts, getSession, getProduct, notFound};
+const deleteProduct = async (req, res) => {
+  const { Codigo } = req.params
+  console.log(Codigo)
+
+  const pool = await conex();
+  const result = await pool
+    .request()
+    .input("codigo", sql.VarChar(32), Codigo)
+    .query('spBorrarArticulo @codigo')
+  console.log(result.recordset[0])
+  res.status(200).json(result.recordset[0])
+  };
+
+module.exports = {getProducts,getProductName,getProductCant, getProductClss, postProducts, deleteProduct, getSession, getProduct, notFound};

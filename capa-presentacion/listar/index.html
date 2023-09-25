@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="style.css"></link>
     <script type = 'module'>
         function getApi(recurso){
+            console.log(recurso)
+                    //http://localhost:3000/Almacen/Listar
             fetch(`http://localhost:3000/Almacen/${recurso}`)
                 .then(res => res.json()) //Analiza los datos de tipo JSON obtenidos del servidor
                 .then(ListaJson => { //Hacer uso de los datos
@@ -41,26 +43,28 @@
                                                                     //anteriormente
                 })
         }
-        
         var btnFilName = document.getElementById("btnNombre");
         var btnFilNum = document.getElementById("btnNumber");
         var btnFilClss = document.getElementById("btnClass");
 
         btnFilName.addEventListener("click", function() {
             let IValue = document.getElementById("name").value
-            console.log(typeof(IValue))
+            if(IValue === ""){
+                IValue = "0"
+            }
             getApi(`Listar/Nombre/${IValue}`)
         })
 
         btnFilNum.addEventListener("click", function() {
-            let IValue = document.getElementById("number")
-            console.log(typeof(IValue))
-            getApi(`Listar/Cantidad/${IValue.value}`)
+            let IValue = document.getElementById("number").value
+            if(IValue == ""){
+                IValue = -1
+            }
+            getApi(`Listar/Cantidad/${IValue}`)
         })
 
         btnFilClss.addEventListener("click", function() {
             let IValue = document.getElementById("select-box").value
-            console.log(typeof(IValue))
             getApi(`Listar/Clases/${IValue}`)
         })
 
@@ -101,15 +105,15 @@
 
         <div id="btnRowBottom">
             <button id="InsertBtn" class="btnBottom"
-                onclick="location.href='insertar.html'">
+                onclick="location.href='../insertar/index.html'">
                 Insertar
             </button>
             <button id="DeleteBtn" class="btnBottom"
-                onclick="location.href='insertar.html'">
+                onclick="location.href='../borrar/index.html'">
                 Borrar
             </button>
             <button id="ExitBtn" class="btnBottom"
-                onclick="location.href='insertar.html'">
+                onclick="location.href='../inicioSesion/index.html'">
                 Salir
             </button>
         </div>
