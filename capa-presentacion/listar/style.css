@@ -49,11 +49,11 @@ select.arts{
 }
 #btnRowBottom{
     display: flex;
-    padding: 0.5rem;
+    padding: 0.6rem;
     margin: 0.5rem;
     flex-direction: row;
     width: 25rem;
-    justify-content: space-evenly;
+    justify-content: space-between;
     
 }
 

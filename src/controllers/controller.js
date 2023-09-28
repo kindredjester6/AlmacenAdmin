@@ -159,4 +159,28 @@ const deleteProduct = async (req, res) => {
   res.status(200).json(result.recordset[0])
   };
 
-module.exports = {getProducts,getProductName,getProductCant, getProductClss, postProducts, deleteProduct, getSession, getProduct, notFound};
+const patchProduct = async (req, res) => {
+  const { Codigo } = req.params
+  const { NewCode, IdClaseArticulo, Nombre, Precio } = req.body
+  console.log(Codigo, NewCode, IdClaseArticulo, Nombre, Precio)
+
+  const pool = await conex();
+  const result = await pool
+    .request()
+    .input("codigo", sql.VarChar(32), Codigo)
+    .input("NewCode", sql.VarChar(32), NewCode)
+    .input("IdClase", sql.Int, IdClaseArticulo)
+    .input("Nombre", sql.VarChar(128), Nombre)
+    .input("Precio", sql.Money, Precio)
+    .query
+    (
+      'spActualizarArticulo @codigo, @NewCode, @IdClase, @Nombre, @Precio' //Hacer corto
+    )
+  console.log(result.recordset[0])
+  res.status(200).json(result.recordset[0])
+}
+
+module.exports = {getProducts,getProductName,
+  getProductCant, getProductClss,
+  postProducts, patchProduct, deleteProduct,
+  getSession, getProduct, notFound};

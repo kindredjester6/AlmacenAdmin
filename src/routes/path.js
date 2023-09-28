@@ -17,6 +17,8 @@ router.post("/Almacen/Crear", controller.postProducts);
 // Delete an article.
 router.patch("/Almacen/Borrar/:Codigo", controller.deleteProduct);
 
+//Update an arcticle
+router.patch("/Almacen/Actualizar/:Codigo", controller.patchProduct)
 router.use(controller.notFound);
 
 module.exports = router;

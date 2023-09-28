@@ -12,6 +12,7 @@
         var table;
         var newButton;
         var button = document.getElementById("btnDelete");
+        var btnConfirm;
         var IBtn = document.getElementById("Codigo")
         button.addEventListener("click", async function() { //Si el usuario toca el boton inicia el proceso
             fetch(`http://localhost:3000/Almacen/Listar/Producto/${IBtn.value}`)
@@ -33,7 +34,7 @@
                 return `
                     <tr class="rows">
                         <td>${article.id}</td>
-                        <td>${article.Codigo}</td>
+                        <td id="getCode">${article.Codigo}</td>
                         <td>${article.Nombre}</td>
                         <td>${article.Clase}</td>
                         <td>${article.Precio}</td>
@@ -47,18 +48,19 @@
             span = document.getElementById("spanBottom")
             span.style.width = "25rem"
             span.style.margin = "0.5rem"
-
-            newButton = '<button id="confirmBtn">Confirm</button>'
+            console.log(document.getElementById('getCode').value)
+            let onclick = `onclick = "patchProduct(document.getElementById('getCode').textContent)"`
+            newButton = `<button id="confirmBtn" ${onclick}>Confirm</button>`
             document.querySelector("#spanButtom").innerHTML = newButton
+            btnConfirm = document.getElementById("confirmBtn");
         })
         .catch((ERROR) => console.error("Error:", ERROR))
         //.then(res => res.json())
-        .then((response) => console.log(response))
+        .then((response) => response)
     })
     </script>
 </head>
 <body>
-
     <div class="posForm">
         <span></span>
         <header>Eliminar articulo</header>

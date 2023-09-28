@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actualizar</title>
+    <link rel="stylesheet" href="style.css"></link>
+    <script src="main.js"></script>
+    <script type="module">
+        function getApi(value){
+            fetch(`http://localhost:3000/Almacen/Actualizar/${value}`)
+                .then(res => res.json()) //Analiza los datos de tipo JSON obtenidos del servidor
+                .then(ListaJson => { //Hacer uso de los datos
+                    //dar inicio a la estructura HTML
+                    var html = Component
+                    //Hace un map para concatenar de la forma idonea
+                    const rowArticles = ListaJson.map(article => {
+                        return [article.Codigo, article.Nombre,
+                                article.Clase, article.Precio]
+                    }).join(' ')
+
+                    console.log(rowArticles)
+                    document.querySelector("main").innerHTML = html //Usa la etiqueta 'main' para incrustar el HTML creado
+                                                                    //anteriormente
+                })
+            }
+        var btnAct = document.getElementById("btnPatch");
+        var btnConfirm = document.getElementById("btnConfirm");
+        btnAct.addEventListener("click", function(){
+            let IValue = document.getElementById("name").value
+            getApi(IValue)
+        })
+
+        btnConfirm.addEventListener("click", function() {
+            let IValueCode = document.getElementById("ICode").value
+            let IValueNombre = document.getElementById("IName").value
+            let IValueClase = document.getElementById("IClass").value
+            let IValuePrecio = document.getElementById("IMoney").value
+            if(IValueCode === ""|IValueNombre == ""|
+                IValueClase == undefined|IValuePrecio == undefined){
+                //No valido
+                return;
+            }
+            getApi(IValue)
+        })
+    </script>
+
+</head>
+<body>
+    
+    <div class="posForm">
+        <span></span>
+        <header>Actualizar articulo</header>
+        <label> Codigo del articulo
+            <label id="errorLabel">
+                <input type="text" id="Codigo"/>
+            </label>
+        </label>
+        <span id="spanBottom"></span>
+        <main></main> <!-- importante -->
+        <div class="buttonPos">
+            <button onclick="location.href='../listar/index.html'">Regresar</button>
+            <button id="btnPatch">Borrar</button>
+            <div id="spanButtom"></div>
+        </div>
+    </div>
+
+</body>
+</html>
