@@ -6,7 +6,7 @@ const controller = require('../controllers/controller')
 //router.get('/', controller.getSession)
 
 //Envia una lista con elementos JSON
-router.get("/Almacen/Session", controller.getSession);
+router.get("/Almacen/Session/:Pass/:Nombre", controller.getSession);
 router.get("/Almacen/Listar/Nombre/:Name", controller.getProductName);
 router.get("/Almacen/Listar/Cantidad/:Cant", controller.getProductCant);
 router.get("/Almacen/Listar/Clases/:Clss", controller.getProductClss);
@@ -19,6 +19,7 @@ router.patch("/Almacen/Borrar/:Codigo", controller.deleteProduct);
 
 //Update an arcticle
 router.patch("/Almacen/Actualizar/:Codigo", controller.patchProduct)
+
 router.use(controller.notFound);
 
 module.exports = router;

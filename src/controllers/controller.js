@@ -6,14 +6,20 @@ const notFound = function(req, res){
   res.status(404).send('La pagina no existe!')
 }
 
-const getSession = (req,res) => {
+const getSession = async (req,res) => {
+  const {Pass, Nombre} = req.params
+  console.log(Pass,Nombre,'1')
+  const pool = await conex();
+  const result = await pool
+    .request()
+    .input('Nombre', sql.VarChar(128), Nombre)
+    .input('Pass', sql.VarChar(32), Pass)
+    .query('spPassUser @Nombre, @Pass'); //espera a la base de datos
+  const listJson = result.recordset;
 
-  const h1 = "<h2> hola!!! </h2>"
-  res.send(
-    `
-    <h1>Pagina inicial</h1> ${h1}
-    `
-    )
+  console.log(listJson);
+
+  res.send(listJson);
 };
 
 /**
@@ -52,13 +58,7 @@ const getProductName = async(req, res) => {
 
 const getProductCant = async(req, res) => {
   const {Cant} = req.params
-  console.log('ahhhhh')
-  var re = /^[-1-9]+$/;
-  if(!re.test(Cant)){
-    return res.status(400).json({
-      error:'error'
-    })
-  }
+  console.log(Cant)
   const pool = await conex();
   const result = await pool
     .request()
@@ -86,7 +86,7 @@ const getProductClss = async(req, res) => {
   return res.send(listJson);
 }
 
-//Por codigo, es para la parte de eliminar
+//Por codigo, es para la parte de eliminar y actualizar
 const getProduct = async (req,res) => {
   const {Codigo} = req.params
   var re = /^[0-9]+$/;

@@ -6,11 +6,94 @@
     <title>Eliminar articulo</title>
     <link rel="stylesheet" href="style.css"></link>
     <script type="module">
+        var button = document.getElementById("botonI")
 
+        button.addEventListener('click', function(){
+            let inputN =   document.getElementById("floatingUser").value
+            let inputC = document.getElementById("floatingPass").value
+            console.log(inputC, inputN)
+            fetch(`http://localhost:3000/Almacen/Session/${inputC}/${inputN}`)
+            .then(res => res.json()) //Analiza los datos de tipo JSON obtenidos del servidor
+            .then(ListaJson => { //Hacer uso de los datos
+            //dar inicio a la estructura HTML
+            let span;
+
+            //Hace un map para concatenar de la forma idonea
+            console.log(ListaJson[0])
+            if(ListaJson[0].result == 0){
+                console.log('a')
+                window.location.href = "http://localhost:5500/capa-presentacion/listar/index.html"
+            }
+            else{
+                document.getElementById('error').innerHTML = 'Credenciales incorrectas'
+            }
+        })
+        .catch((ERROR) => console.error("Error:", ERROR))
+        //.then(res => res.json())
+        .then((response) => response)
+        })
     </script>
 </head>
 <body>
+    <div id = fondo>
+        <div id = margen>
 
+            <label id="Tope">SIGN IN</label>
+            <label id="error"></label>
+                <div class="form-floating"id = "Info">
+                    <label for='floatingUser' id="User">Usuario</label>
+                    <input ID="floatingUser" type = "user" name="user" class="form-control" placeholder="Usuario">
+
+                </div>
+
+                <div class="form-floating">
+                    <label for='floatingPass' id="Pass">Password</label>
+                    <input ID="floatingPass" type = "password" name="pass" class="form-control" placeholder="Contraseña">
+                </div>
+
+                <div ID="botones">
+                <input type= "submit" name="Iniciar"ID= "botonI" value = "Insertar" class = "btn btn-primary"> <!-- <input type = "submit" name="insertC" class="btn btn-warning" value = "Filtrar por cantidad"> -->
+
+            
+                <Input type= "submit" ID= "botonC" value = "Cerrar" class = "btn btn-danger">
+                </div>  
+
+        </div>
+
+    </div> 
+<!--
+    <?php 
+    if(isset($_POST['Iniciar'])){
+
+        $user=$_POST['user'];
+        $pass=$_POST['pass'];
+        $ip=gethostbyname('');
+        
+        $sql = "
+        declare @val int;
+        set @val = 0;
+        exec spValUsuario '$user','$pass','$ip',@val output;
+        select @val as validacion;
+        ";
+                
+        $stmt = sqlsrv_query($con, $sql);
+        
+        $list = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC);
+
+        if($list['validacion'] == 1){
+            header("Location: http://localhost/Proyecto/lista.php?user=$user");
+            die();
+        }
+        elseif($list['validacion'] == 2){
+            echo '<h3>Usuario o contraseña no coinciden</h3>';   
+        } 
+
+        sqlsrv_free_stmt( $stmt); 
+        sqlsrv_close( $con );
+        }
+    
+    ?>
+-->
     <main></main>
     
 </body>

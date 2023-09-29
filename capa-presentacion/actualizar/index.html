@@ -8,26 +8,43 @@
     <script src="main.js"></script>
     <script type="module">
         function getApi(value){
-            fetch(`http://localhost:3000/Almacen/Actualizar/${value}`)
+            fetch(`http://localhost:3000/Almacen/Listar/Producto/${value}`)
                 .then(res => res.json()) //Analiza los datos de tipo JSON obtenidos del servidor
                 .then(ListaJson => { //Hacer uso de los datos
                     //dar inicio a la estructura HTML
-                    var html = Component
+                    var html;
                     //Hace un map para concatenar de la forma idonea
                     const rowArticles = ListaJson.map(article => {
                         return [article.Codigo, article.Nombre,
                                 article.Clase, article.Precio]
-                    }).join(' ')
+                    })
 
                     console.log(rowArticles)
+                    console.log(rowArticles[0])
+                    console.log(rowArticles[1])
+                    html = `<label id = "actu">Codigo ${rowArticles[0][0]}.
+                    Nuevo Codigo <input id = "ICode"/></label>
+
+                    <label id = "actu">Nombre ${rowArticles[0][1]}.
+                    Nuevo nombre<input id = "IName"/></label>
+
+                    <label id = "actu">Clase ${rowArticles[0][2]}.
+                    Clases  ${select}</label>
+
+                    <label id = "actu">Precio ${rowArticles[0][3]}.
+                    Precio <input id = IMoney/></label>`
                     document.querySelector("main").innerHTML = html //Usa la etiqueta 'main' para incrustar el HTML creado
                                                                     //anteriormente
+                    document.getElementById('spanBottom').style.width = '25rem'
+                    document.getElementById('spanBottom').style.marginBottom = '0.5rem';
+                    //document.querySelector("spanButtom").innerHTML = '<button id="btnPatch">Actualizar</button>'
                 })
             }
-        var btnAct = document.getElementById("btnPatch");
+        var btnAct = document.getElementById("btnSearch");
         var btnConfirm = document.getElementById("btnConfirm");
         btnAct.addEventListener("click", function(){
-            let IValue = document.getElementById("name").value
+            let IValue = document.getElementById("Codigo").value
+            console.log(IValue)
             getApi(IValue)
         })
 
@@ -57,10 +74,10 @@
             </label>
         </label>
         <span id="spanBottom"></span>
-        <main></main> <!-- importante -->
+        <main id="actualizar"></main> <!-- importante -->
         <div class="buttonPos">
             <button onclick="location.href='../listar/index.html'">Regresar</button>
-            <button id="btnPatch">Borrar</button>
+            <button id="btnSearch">Buscar</button>
             <div id="spanButtom"></div>
         </div>
     </div>

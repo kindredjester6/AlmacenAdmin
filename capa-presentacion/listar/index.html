@@ -24,6 +24,7 @@
                         </tr>
                         `
                     //Hace un map para concatenar de la forma idonea
+                    console.log(ListaJson)
                     const rowArticles = ListaJson.map(article => {
                         return `
                             <tr class="rows">
@@ -90,9 +91,20 @@
 
                     <label>Clases
                         <select id="select-box" class="arts">
-                            <option value=1>Plomería</option>
-                            <option value=2>Eléctricos</option>
-                            <option value=3>Ebanistería</option>
+                            <option value=1>Eléctricos</option>
+                            <option value=2>Tornilleria</option>
+                            <option value=3>Pinturas</option>
+                            <option value=4>Fontaneria</option>
+                            <option value=5>Proteccion</option>
+                            <option value=6>MaquinariaPesada</option>
+                            <option value=7>Cerraduras</option>
+                            <option value=8>Construccion</option>
+                            <option value=9>Carpinteria</option>
+                            <option value=10>Jardineria</option>
+                            <option value=11>Uniformes</option>
+                            <option value=12>Adhesivos</option>
+                            <option value=13>Automotriz</option>
+                            <option value=14>Almacenamiento</option>
                         </select>
 
                         <button id="btnClass" class="btnFiltrar">Filtrar por clase</button>

@@ -13,6 +13,7 @@ header{
 span{
     width: 20rem;
     border-top: 0.1rem solid black ;
+    margin-bottom: 0.2rem;
 
 }
 
@@ -71,4 +72,11 @@ tr{
     width: 25rem;
     flex-direction: row;
     justify-content: space-between;
+}
+
+#actualizar{
+    width: 25rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }

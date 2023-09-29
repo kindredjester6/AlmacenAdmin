@@ -22,7 +22,6 @@
             let span;
             var html = `<table class ="tabla">
                 <tr  class = "topRow">
-                        <th>id</th>
                         <th>Codigo</th>
                         <th>Nombre</th>
                         <th>Clase</th>
@@ -33,7 +32,6 @@
             const rowArticles = ListaJson.map(article => {
                 return `
                     <tr class="rows">
-                        <td>${article.id}</td>
                         <td id="getCode">${article.Codigo}</td>
                         <td>${article.Nombre}</td>
                         <td>${article.Clase}</td>

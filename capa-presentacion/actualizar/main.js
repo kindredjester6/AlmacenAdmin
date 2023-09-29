@@ -20,24 +20,19 @@ function patchProduct(value){
     });
 }
 
-const Component = `<label for="name">Nombre
-<input class="arts" type="text" id="name" minlength="0" maxlength="8" size="10" autocomplete="off"/>
-
-<button id="btnNombre" class="btnFiltrar">Filtrar por nombre</button>
-</label>
-
-<label for="number">Cantidad
-<input class="arts" type="number" id="number" minlength="0" maxlength="8" size="10"/>
-
-<button id="btnNumber" class="btnFiltrar">Filtrar por cantidad</button>
-</label>
-
-<label>Clases
-<select id="select-box" class="arts">
-    <option value=1>Plomería</option>
-    <option value=2>Eléctricos</option>
-    <option value=3>Ebanistería</option>
-</select>
-
-<button id="btnClass" class="btnFiltrar">Filtrar por clase</button>
-</label>`
+const select = `<select id="select-box" class="arts">
+<option value=1>Eléctricos</option>
+<option value=2>Tornilleria</option>
+<option value=3>Pinturas</option>
+<option value=4>Fontaneria</option>
+<option value=5>Proteccion</option>
+<option value=6>MaquinariaPesada</option>
+<option value=7>Cerraduras</option>
+<option value=8>Construccion</option>
+<option value=9>Carpinteria</option>
+<option value=10>Jardineria</option>
+<option value=11>Uniformes</option>
+<option value=12>Adhesivos</option>
+<option value=13>Automotriz</option>
+<option value=14>Almacenamiento</option>
+</select>`

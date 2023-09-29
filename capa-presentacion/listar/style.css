@@ -1,6 +1,10 @@
+html{
+    width: 100rem;
+    height: 100rem;
+}
 
 div.cataPos{
-    height: 29rem;
+    height: 100rem;
     display: flex;
     flex-flow: column;
     align-items: center;
@@ -85,7 +89,7 @@ tbody{
 }
 tr{
     display: flex;
-    width: 25rem;
+    width: 45rem;
     flex-direction: row;
     justify-content: space-between;
 }
